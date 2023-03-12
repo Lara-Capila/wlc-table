@@ -1,10 +1,84 @@
 const formRef = document.querySelector("form");
 const tableRef = document.querySelector("table");
 const tbodyRef = document.querySelector("tbody");
+
 const radioButtons = document.querySelectorAll('input[name="amount-type"]');
 const downloadButton = document.getElementById('download-button');
 
+const autosuggestInput = document.getElementById('autosuggest-input');
+const autosuggestList = document.querySelector('.autosuggestion-list');
+
+const species = [
+	'Trairão',
+	'Pintado',
+	'Curimba',
+	'Piau',
+	'Pirarucu',
+	'Pirarara',
+	'Cachara',
+	'Tucunaré',
+	'Jundiá Albino',
+	'Tilápia',
+	'Catfish',
+	'Tambacu',
+	'Carpa Capim',
+	'Lambari Prata',
+	'Lambari Rosa',
+	'Carpa Colorida',
+	'Carpakoi',
+	'Cascudo',
+	'Cascudo Abacaxi'
+].sort();
+
 const currentDate = new Date().toLocaleDateString('pt-BR').replaceAll('/', '-');
+
+const displayNames = (value) => {
+  autosuggestInput.value = value;
+
+  removeLiElements();
+}
+
+const removeLiElements = () => {
+  const items = document.querySelectorAll(".list-items");
+
+  items.forEach((item) => {
+    item.remove();
+  });
+}
+
+const clearDatasForm = () => {
+	formRef.reset();
+};
+
+const clearDatasTable = () => {
+	tableRef.remove();
+};
+
+const autosuggest = (specie) => {
+	return species.filter((item) => {
+		return item.toLowerCase().startsWith(specie.toLowerCase());
+	})
+};
+
+const getSuggestionsList = ({ target }) => {
+	const specieToSearch = target.value;
+	removeLiElements();
+
+	if (specieToSearch !== '') {
+		const getSuggestionValues = autosuggest(specieToSearch);
+		
+		getSuggestionValues.map((value) => {
+			let createListItem = document.createElement('li');
+
+			createListItem.classList.add("list-items");
+			createListItem.style.cursor = 'pointer';
+			createListItem.setAttribute("onclick", `displayNames("${value}")`);
+
+			createListItem.innerHTML = value;
+			document.querySelector(".autosuggestion-list").appendChild(createListItem);
+		});
+	}
+};
 
 const getFormatedValue = (value) => {
 	let selectedAmountType;
@@ -43,13 +117,13 @@ const convertTableToImage = () =>  {
 		download.href = canvas.toDataURL("image/png");
 		download.download = `tabela-preços-${currentDate}.jpeg`
 		download.click();
-	})
+		clearDatasTable();
+	});
 }
 
 const onSubmitForm = (event) => {
 	event.preventDefault();
 	if (document) {
-		const itemInputRef = document.getElementById('item').value;
 		const valueInputRef = document.getElementById('value').value;
 		const size1InputRef = document.getElementById('size1').value;
 		const size2InputRef = document.getElementById('size2').value;
@@ -59,15 +133,15 @@ const onSubmitForm = (event) => {
 
 		tbodyRef.innerHTML += `
 			<tr>
-				<td>${itemInputRef === '' ? '-' : itemInputRef}</td>
+				<td>${autosuggestInput.value === '' ? '-' : autosuggestInput.value}</td>
 				<td>${fotmatedSize}</td>
 				<td>${formatedValue}</td>
 				<td name="delete-btn-container"><button class="delete-btn"><img src="./assets/delete-icon.svg" width="20px" height="20px" /></button></td>
 			</tr>
 		`;
-		
-		formRef.reset();
 	}
+
+	clearDatasForm();
 };
 
 const onDeleteRow = (event) => {
@@ -78,3 +152,4 @@ const onDeleteRow = (event) => {
 downloadButton.addEventListener("click", convertTableToImage);
 formRef.addEventListener("submit", onSubmitForm);
 tableRef.addEventListener("click", onDeleteRow);
+autosuggestInput.addEventListener('keyup', getSuggestionsList)

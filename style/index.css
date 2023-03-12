@@ -12,6 +12,7 @@
 
 body {
     font-family: 'Roboto', sans-serif;
+    margin: 20px !important;
 }
 
 input {
@@ -54,12 +55,13 @@ input:focus {
     width: 100%;
     color: var(--white);
     font-weight: 600;
-    letter-spacing: 0.05rem;
+    letter-spacing: 0.1rem;
     font-family: inherit;
     border-radius: 8px;
     border: none;
     background-color: var(--blue-500);
     box-shadow: var(--box-shadow);
+    font-size: 15px;
 }
 
 .labels {
@@ -94,10 +96,11 @@ tbody tr td {
     justify-content: center;
     flex: 1;
     gap: 12px;
+    margin: 8px;
 }
 
 .radio-buttons-container input[type="radio"] {
-    display: none; /* Esconder os inputs originais */
+    display: none;
 }
   
 .radio-buttons-container label {
@@ -105,16 +108,18 @@ tbody tr td {
     padding: 8px 16px;
     font-size: 14px;
     font-weight: bold;
-    color: #fff;
-    background-color: #ccc;
-    border: 1px solid #999;
+    background-color: transparent;
+    border: 1px solid var(--gray-300);
+    box-shadow: var(--box-shadow);
     border-radius: 4px;
     cursor: pointer;
+    color: var(--dark);
 }
 
 .radio-buttons-container input[type="radio"]:checked + label {
     background-color: #369;
     border-color: #369;
+    color: var(--white);
 }
 
 .delete-btn {
@@ -144,4 +149,25 @@ tbody tr td {
     box-shadow: var(--box-shadow);
     margin-right: 30px;
     margin-bottom: 24px;
+}
+
+.autosuggestion-list {
+    padding-left: 0;
+    margin-bottom: 0;
+    margin-top: 65px;
+    max-height: 200px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    position: absolute;
+    box-shadow: var(--box-shadow);
+    border-radius: 8px;
+    width: 90%;
+}
+
+.list-items {
+    list-style: none;
+    padding: 4px;
+    z-index: 10;
+    background-color: var(--white);
+    width: 100%;
 }

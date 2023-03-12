@@ -1,83 +1,101 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style/index.css">
-    <title>Tabela de preços</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="style/index.css">
+	<title>Tabela de preços</title>
 </head>
 
 <body>
-    <h1 class="title-page">Tabela de preços</h1>
-    <form>
-        <section class="inputs-row">
-            <div class="input-label-container">
-                <label  class="labels" for="item">Nome</label>
-                <input autocomplete="off" type="text" name="item" id="item">
-            </div>
+	<h1 class="title-page">Tabela de preços</h1>
+	<form autocomplete="off">
+		<section class="inputs-row">
+			<div class="input-label-container">
+				<label class="labels" for="item">Nome</label>
+				<input
+					id="autosuggest-input"
+					type="text"
+					name="item"
+					required
+				>
+				<ul class="autosuggestion-list"></ul>
+			</div>
 
-            <div class="input-label-container">
-                <label  class="labels" for="size1 size2">Tamanho (cm)</label>
-                <div class="container-input-size">
-                    <input 
-                        autocomplete="off" 
-                        type="text"
-                        name="size"
-                        id="size1"
-                    >
-                    <span>a</span>
-                    <input
-                        autocomplete="off" 
-                        type="text" 
-                        name="size" 
-                        id="size2" 
-                    >
-                </div>
-            </div>
+			<div class="input-label-container">
+				<label  class="labels" for="size1 size2">Tamanho (cm)</label>
+				<div class="container-input-size">
+					<input 
+						autocomplete="off" 
+						type="text"
+						name="size"
+						id="size1"
+						pattern="-?\d*\.?\d+"
+						required
+					>
+					<span>a</span>
+					<input
+						autocomplete="off" 
+						type="text" 
+						name="size" 
+						id="size2"
+						pattern="-?\d*\.?\d+"
+						required
+					>
+				</div>
+			</div>
 
-            <div class="input-label-container">
-                <label class="labels" for="value">Valor</label>
-                <input autocomplete="off" type="number" name="value" id="value">
-            </div>
+			<div class="input-label-container">
+				<label class="labels" for="value">Valor</label>
+				<input
+					autocomplete="off"
+					type="text"
+					name="value"
+					id="value"
+					pattern="-?\d*\.?\d+"
+					title="Somente numeros"
+					required
+				>
+			</div>
 
-            <div class="radio-buttons-container" id="amount-types">
-                <input type="radio" id="button1" name="amount-type" value="Unitário">
-                <label for="button1">Unitário</label>
-                
-                <input type="radio" id="button2" name="amount-type" value="Cento">
-                <label for="button2">Cento</label>
-                
-                <input type="radio" id="button3" name="amount-type" value="Milheiro">
-                <label for="button3">Milheiro</label>
-            </div>
+			<div class="radio-buttons-container" id="amount-types">
+					<input type="radio" id="button1" name="amount-type" value="Unitário">
+					<label for="button1">Unitário</label>
+					
+					<input type="radio" id="button2" name="amount-type" value="Cento">
+					<label for="button2">Cento</label>
+					
+					<input type="radio" id="button3" name="amount-type" value="Milheiro">
+					<label for="button3">Milheiro</label>
+			</div>
 
-            <button class="button-submit" type="submit">Enviar</button>
-        </section>
-    </form>
+			<button class="button-submit" type="submit">Enviar</button>
+		</section>
+	</form>
 
-    <section class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>Item</th>
-                    <th>Tamanho</th>
-                    <th>Valor</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-    </section>
+	<section class="table-container">
+		<table>
+			<thead>
+				<tr>
+					<th>Item</th>
+					<th>Tamanho</th>
+					<th>Valor</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+	</section>
 
-    <div class="download-button-container">
-        <button id="download-button" type="button" class="download-button"><img src="./assets/dowload-icon.svg" width="25px" height="25px" /></button>
-        <a id="result" ></a>
-    </div>
+	<div class="download-button-container">
+		<button id="download-button" type="button" class="download-button"><img src="./assets/dowload-icon.svg" width="25px" height="25px" /></button>
+		<a id="result" ></a>
+	</div>
 
-    <script type="text/javascript" src="js/index.js"></script>
-    <script type="text/javascript" src="https://github.com/niklasvh/html2canvas/releases/download/0.5.0-alpha1/html2canvas.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="https://github.com/niklasvh/html2canvas/releases/download/0.5.0-alpha1/html2canvas.js"></script>
 </body>
 </html>
